@@ -16,33 +16,44 @@
 }
 
 /* default styles */
-body {
+html {
 	font-family: Arial, Helvetica, sans-serif;
-    font-size: calc(15px + .2vw);
-	width: min(80%, 1024px);
-	line-height: 1.5;
-	margin: auto;
-	border: 2px solid var(--accent-color);
 }
-h1, h2, h3, p, ul {
-	padding: .25em 0;
+
+body {
+	width: 95%;
+	max-width: 960px;
+	margin: 0 auto;
+	border: 3px solid var(--accent-color);
+	background-color: white;
 }
-a:hover, a:focus{
-	font-style: italic;
-	color: var(--accent-color);
-}
+
 h1 {
 	font-size: 150%;
-}
-h2 {
-	font-size: 130%;
+	margin: .75em 0;
 	color: var(--accent-color);
 }
-h3 {
-	font-size: 105%;
+
+h2 {
+	margin: .75em 0 .5em;
+	color: var(--accent-color);
 }
+
+h3 {
+	margin: .5em 0;
+}
+
+p {
+	margin: .5em 0;
+	line-height: 1.4;
+}
+
 ul {
-	margin-left: 2em;
+	margin: .5em 0 .5em 1.25em;
+}
+
+blockquote {
+	margin: 0;
 }
 
 /* the styles for the header */
@@ -51,62 +62,72 @@ header {
 	border-bottom: 2px solid var(--accent-color);
 	background-image: linear-gradient(
 	    30deg, var(--gradient-color) 0%, white 30%, white 65%, var(--gradient-color) 100%);
-	& h2 {
-		font-size: 175%;
-		padding: .5em 0 0 0;
-	}
-	& h3 {
-		font-size: 130%;
-		font-style: italic;
-		padding-bottom: 1em;
-	}
-	& img {
-		width: clamp(40px, 15%, 80px);
-		float: left;
-		margin: .75em 1em;
-	}
+	text-align: center;
+}
+
+header h2 {
+	font-size: 175%;
+	padding: .5em 0 0 0;
+}
+
+header h3 {
+	font-size: 130%;
+	font-style: italic;
+	padding-bottom: 1em;
+}
+
+header img {
+	display: none;
 }
 
 /* the styles for the main content */
 main {
 	display: flex;
+	flex-direction: column-reverse;
 	padding: 0 1em 1em;
-	& blockquote {
-		font-style: italic;
-		padding-left: 1em;
-	}
-	& h3 + img { /* speaker images */
-		width: clamp(40px, 50%, 75px);
-		border: 4px double var(--accent-color);
-		border-radius: 10px;
-	}
 }
+
+main blockquote {
+	font-style: italic;
+	padding-left: 1em;
+}
+
+main h3 + img {
+	width: clamp(40px, 50%, 75px);
+	border: 4px double var(--accent-color);
+	border-radius: 10px;
+	margin-bottom: .75em;
+}
+
+/* speaker images */
 
 /* the styles for the section */
 section {
-	flex-basis: 75%;
 	padding-left: .5em;
-	& img {
-		width: clamp(100px, 50%, 250px);
-		float: right;
-		margin: 0 1em .25em;
-	}
+	border-bottom: 1px solid #ccc;
+}
+
+section img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 0 0 .75em 0;
 }
 
 /* the styles for the aside */
 aside {
-	flex-basis: 25%;
 	padding-right: .5em;
 }
 
 /* the styles for the footer */
 footer {
 	background-color: var(--accent-color);
-	& p {
-		text-align: center;
-		color: white;
-		padding: 1em 0;
-	}
+}
+
+footer p {
+	text-align: center;
+	color: white;
+	padding: 1em 0;
 }
 
 /* CSS class */
@@ -115,72 +136,202 @@ footer {
 	border-bottom: 2px solid var(--accent-color);
 	padding: .5em 0 1em;
 }
-.speaker {
-	& h1 {
-		color: var(--accent-color);
-	}
-	& h2 {
-		color: black;
-	}
-	& p {
-		padding: .5em 0; 
-	}	
+
+.speaker h1 {
+	color: var(--accent-color);
 }
+
+.speaker h2 {
+	color: black;
+}
+
+.speaker p {
+	padding: .5em 0;
+}
+
 .large {
 	font-size: 125%;
 }
 
 /* styles for the menu */
-.menu {
-	display: flex;
-	flex-wrap: wrap;
-	& li { 
-		flex-basis: 20%; 
-		text-align: center;
-	}
+.navbar {
+	position: relative;
+	background-color: var(--accent-color);
 }
 
-.navbar {
-	clear: left;
+#menu-toggle {
+	display: none;
+}
+
+.menu-btn {
+	display: block;
+	padding: 1em;
+	cursor: pointer;
+	color: var(--light_menu);
+	font-weight: bold;
+}
+
+.menu-btn::before {
+	content: "☰";
+	margin-right: .5em;
+}
+
+.menu {
+	list-style: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 40%;
 	background-color: var(--accent-color);
-	& a {
-		display: block;
-		padding: 1em;
-		text-decoration: none;
-		margin: 0 1px 2px;
-	}
-	& a:link, a:visited { 
-		color: var(--light_menu);
-	}
-	& a:hover, a:focus, a.current {
-		background-color: var(--mid_menu);
-		color: var(--dark_menu);
-	}
-	& ul {
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
-	}
+	display: none;
+	padding: 0;
+}
+
+.menu li {
+	width: 100%;
+}
+
+.menu li a {
+	display: block;
+	padding: .75em 1em;
+	text-decoration: none;
+	color: var(--light_menu);
+	border-top: 1px solid var(--mid_menu);
+}
+
+.menu li a:hover,
+.menu li a:focus,
+.menu li a.current {
+	background-color: var(--mid_menu);
+	color: var(--dark_menu);
+}
+
+#menu-toggle:checked + .menu-btn::before {
+	content: "✖";
+}
+
+#menu-toggle:checked ~ .menu {
+	display: block;
 }
 
 .submenu {
 	position: relative;
-	& small { margin-left: .25em; }
+}
+
+.submenu > a {
+	position: relative;
+}
+
+.submenu > a small::after {
+	content: "▶";
+	font-size: .7rem;
+	margin-left: .25em;
 }
 
 .dropdown {
-	position: absolute;
-	left: 0;
-	right: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 	background-color: var(--accent-color);
 	color: var(--light_menu);
 	display: none;
-	& > li a { margin: 0 2px 2px; }
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 100%;
+}
+
+.dropdown li a {
+	padding-left: 2em;
 }
 
 .submenu:hover > .dropdown {
 	display: block;
 }
 
-.menu > li:first-child a { margin-left: 0; }
-.menu > li:last-child a { margin-right: 0; }
+/* main desktop styles and nav desktop styles */
+@media (min-width: 800px) {
+
+	main {
+		flex-direction: row;
+	}
+
+	section {
+		flex-basis: 75%;
+		border-bottom: none;
+	}
+
+	aside {
+		flex-basis: 25%;
+	}
+
+	section img {
+		width: clamp(100px, 50%, 250px);
+		float: right;
+		margin: 0 1em .25em;
+	}
+
+	header {
+		text-align: left;
+	}
+
+	header img {
+		display: block;
+		width: clamp(40px, 15%, 80px);
+		float: left;
+		margin: .75em 1em;
+	}
+
+	.menu-btn {
+		display: none;
+	}
+
+	.navbar {
+		clear: left;
+	}
+
+	.menu {
+		position: static;
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		padding: 0;
+	}
+
+	.menu li {
+		flex: 1 1 20%;
+		text-align: center;
+		width: auto;
+	}
+
+	.menu li a {
+		margin: 0 1px 2px;
+		border-top: none;
+	}
+
+	.dropdown {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		width: 100%;
+		display: none;
+		background-color: var(--accent-color);
+	}
+
+	.submenu:hover > .dropdown {
+		display: block;
+	}
+
+	.submenu > a small::after {
+		content: "▼";
+	}
+
+	.menu > li:first-child a {
+		margin-left: 0;
+	}
+
+	.menu > li:last-child a {
+		margin-right: 0;
+	}
+}
